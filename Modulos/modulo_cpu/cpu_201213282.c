@@ -14,7 +14,9 @@
 MODULE_LICENSE("GPL");
 MODULE_DESCRIPTION("Escribir informaciond del cpu");
 MODULE_AUTHOR("Sergio De los Rios");
-
+    struct task_struct *task_list;
+    struct task_struct *task_child;
+    struct list_head *list;
 char buffer[256];
 char * get_task_state(long state)
 {
@@ -39,17 +41,10 @@ char * get_task_state(long state)
 
 static int escritura_archivo(struct seq_file *s,void *v)
 {
-    unsigned int process_count = 0;
-    pr_info("Number of processes:%u\n", process_count);
     seq_printf(s, "  Nombre: Sergio De los Ríos.\n");
     seq_printf(s, "  Carnet: 201213282.\n");
     seq_printf(s, "  Nombre: Randolph Muy.\n");
     seq_printf(s, "  Carnet: 201314112.\n");
-    struct task_struct *task_list;
-    for_each_process(task_list) {
-        pr_info("Process: %s\t PID:[%d]\t State:%ld\t Padre:[%d]\n",task_list->comm, task_list->pid,task_list->state,task_list->parent);
-        process_count++;    
-    }
     return 0;
 }
 static int open_file(struct inode *inode, struct  file *file) {
@@ -64,6 +59,18 @@ static struct file_operations fcpu =
 static int testmodulo_init(void)
 {
     proc_create("memo_201213282_201314112", 0, NULL, &fcpu);
+    unsigned int process_count = 0;
+    printk(KERN_INFO "---Inicio-----\n");
+    for_each_process(task_list) {
+         printk(KERN_INFO "PID: %d\tPROCESS: %s\tSTATE: %ld\n",task_list->pid, task_list->comm, task_list->state);
+         process_count++;    
+         list_for_each(list, &task_list->children){                        
+           	task_child = list_entry( list, struct task_struct, sibling );   
+         	printk(KERN_INFO "hijo:\tPID: %d\tPROCESS: %s\tSTATE: %ld\n",task_child->pid,task_child->comm, task_child->state);
+        }
+        printk("-----------------------------------------------------");    /*for aesthetics*/
+    }
+    pr_info("Number of processes:%u\n", process_count);
     printk(KERN_INFO "Sergio De los Rios\nRandolph Muy\n");//numero de carnet
  //Aqui iria el codigo a ejecutar
    return 0;    // Si el retorno no es 0 
