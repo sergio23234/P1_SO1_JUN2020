@@ -1,0 +1,6 @@
+//obj -m
+
+https://www.kernel.org/doc/Documentation/kbuild/makefiles.txt
+
+//carga de modulos
+https://www.genbeta.com/desarrollo/programando-modulos-para-el-kernel-de-linux
