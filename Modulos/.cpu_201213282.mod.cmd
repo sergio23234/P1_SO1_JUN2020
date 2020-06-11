@@ -1,0 +1,1 @@
+cmd_/home/sergio/Documentos/SOPES1/Lab/Proyecto_1/P1_SO1_JUN2020/Modulos/cpu_201213282.mod := { echo  /home/sergio/Documentos/SOPES1/Lab/Proyecto_1/P1_SO1_JUN2020/Modulos/cpu_201213282.o; echo; } > /home/sergio/Documentos/SOPES1/Lab/Proyecto_1/P1_SO1_JUN2020/Modulos/cpu_201213282.mod
