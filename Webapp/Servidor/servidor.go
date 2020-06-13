@@ -1,32 +1,29 @@
 package main
- 
-import (
-	"fmt"// Imprimir en consola
-/*	"io"// Ayuda a escribir en la respuesta
-	"log"//Loguear si algo sale mal*/
-	"net/http"// El paquete HTTP
-)
- 
-    func manejador(w http.ResponseWriter, r *http.Request){
-      fmt.Fprintf(w,"Hola, %s, ¡este es el servidor!", r.URL.Path)
-    }
-    func main(){
-      http.HandleFunc("/", manejador)
-      fmt.Println("El servidor se encuentra en ejecución")
-      http.ListenAndServe(":8080", nil)
-    }
 
-/*func main() {
- 
-	http.HandleFunc("/hola", func(w http.ResponseWriter, peticion *http.Request) {
-		io.WriteString(w, "Solicitaste hola")
+import (
+	"fmt"
+	"net/http"
+
+	info_cpu "./cpu_info"
+	"github.com/rs/cors"
+)
+
+func main() {
+	mux := http.NewServeMux()
+	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		w.Write([]byte("{\"hola\": \"mundo\"}"))
 	})
- 
- 
-	http.HandleFunc("/ruta/un/poco/larga", func(w http.ResponseWriter, peticion *http.Request) {
-		io.WriteString(w, "Solicitaste ruta/un/poco/larga")
+
+	mux.HandleFunc("/cpu", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+
+		inf := fmt.Sprintf("%f", info_cpu.GetPorcentajeUso())
+		w.Write([]byte("{\"cpu_info\": \"" + inf + "\"}"))
 	})
-	direccion := ":8080" // Como cadena, no como entero; porque representa una dirección
-	fmt.Println("Servidor listo escuchando en " + direccion)
-	log.Fatal(http.ListenAndServe(direccion, nil))
-}*/
+
+	// cors.Default() setup the middleware with default options being
+	// all origins accepted with simple methods (GET, POST).
+	handler := cors.Default().Handler(mux)
+	http.ListenAndServe(":8080", handler)
+}

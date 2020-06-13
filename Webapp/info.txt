@@ -1,0 +1,33 @@
+https://stackoverflow.com/questions/11356330/how-to-get-cpu-usage
+
+=========== pagina de ifonrmacion sobre CPU ===========
+https://stackoverflow.com/questions/11356330/how-to-get-cpu-usage
+https://bitbucket.org/bertimus9/systemstat/src/master/
+
+
+============ paginas de ayuda para conectar el cliente con el servidor =================
+== habilitar cors (pero no me funciono) =========
+https://flaviocopes.com/golang-enable-cors/
+
+==== se utiliza go Cors ===
+https://github.com/rs/cors
+
+
+==== cliente consume con fetch (javascript nativo) =======
+https://www.youtube.com/watch?v=-j50jOzTHcI
+
+
+
+=== librerias de interes para websockets ======
+http://www.gorillatoolkit.org/pkg/mux
+
+
+=== utilizacion de websockets utilizando vuejs =======
+https://es.vuejs.org/v2/cookbook/using-axios-to-consume-apis.html
+
+==== crud con websockets ===
+https://www.youtube.com/watch?v=ccdB22kmR_s
+
+
+==ejemplo sencillo utilizando websockets=========
+https://www.youtube.com/watch?v=CQsaLfVusH4
