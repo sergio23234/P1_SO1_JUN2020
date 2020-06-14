@@ -8,7 +8,13 @@
  <style>
     body {
       background-image: url("Raminfo/fondito1.jpg");
+      background-size:100% 100%;
     }
+ .label {
+  color: #06a225;
+  background-color: #e5e5e5;
+  font-size: 22px;
+}
     .boton_personalizado{
     text-decoration: none;
     padding: 10px;
@@ -28,10 +34,12 @@
   .contenedor-arbol{
    background-image: url("Raminfo/25101.jpg");
    background-size:100% 100%; 
+   opacity: 0.8;
 	}
    .resu{
    background-image: url("Raminfo/negro.jpg");
    background-size:100% 100%; 
+   opacity: 0.8;
 	}
    </style>
 </head>
@@ -60,6 +68,9 @@
 </div>
 <div id="Tabla" style="visibility: hidden">
 <h3>tabla:</h3>
+<label for="idkill" class="label">A eliminar:</label>
+<input type="number" id="idkill" name="id">
+<button id="btnAsync" class="boton_personalizado" onclick="myFunction()">prueba</button>
 <table class="idtable" id="Stable">
    <thead>
    <tr>
@@ -100,8 +111,8 @@
 	}
     }
   function myFunction() {
-      console.log("llego");
-      prueba();
+      var dato = document.getElementById("idkill").value;
+      prueba_id(dato);
     }
   </script>
 <script>

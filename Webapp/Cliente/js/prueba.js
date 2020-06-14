@@ -8,7 +8,25 @@ function prueba(){
     console.log("error!!");
   })
 }
-
+function prueba_id(id_number){  
+fetch("http://localhost:8080/idkill",{
+	method:'post',
+	headers:{
+		"Content-Type":"application/json"
+	},
+	body: JSON.stringify({Id:id_number})})
+  .then(res => res.json())
+  .then(data => {
+	if(data.respuesta=="1")
+	{	
+		alert("proceso "+id_number+" terminado");
+ 	}else{alert("proceso "+id_number+" no terminado");}   
+  location.reload();
+  })
+  .catch(function(error){
+    console.log("error!!");
+  })
+}
 function Actualizar_Datos(data){
 document.getElementById("total").innerHTML="Total:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+data.Total;
 document.getElementById("zombies").innerHTML="Zombies:&nbsp;&nbsp;&nbsp;&nbsp;"+data.Zombies;
