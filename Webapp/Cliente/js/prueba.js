@@ -59,7 +59,7 @@ function Actualizar_Arbol(data){
   for(var i in data){
     Hijos_arbol(data[i],ul);
   }
-  var Padre = document.getElementById("Arbol")
+  var Padre = document.getElementById("MArbol")
   Padre.appendChild(ul);
 }
 function Hijos_arbol(data,rot)
