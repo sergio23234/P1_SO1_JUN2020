@@ -4,3 +4,16 @@ https://www.kernel.org/doc/Documentation/kbuild/makefiles.txt
 
 //carga de modulos
 https://www.genbeta.com/desarrollo/programando-modulos-para-el-kernel-de-linux
+
+
+
+
+=========== PASOS PARA CARGAR EL MODULO =================
+1. en la carpeta hacer make all 
+2. hubicamos el archivo .ko
+3. hacer sudo insmod nombre_archivo.ko
+4. dmesg (muestra el mensaje de los modulos)
+5. luego podemos ir a ver a /proc par verificar que el archivo se haya creado nuestro modulos
+6. cat /proc/modulos
+7. lsmod    (lista todos los modulos)
+8. sudo rmmod nombreModulo (para remover los modulos)

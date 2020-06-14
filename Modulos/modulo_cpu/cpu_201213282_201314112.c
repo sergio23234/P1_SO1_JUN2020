@@ -45,6 +45,18 @@ static int escritura_archivo(struct seq_file *s,void *v)
     seq_printf(s, "  Carnet: 201213282.\n");
     seq_printf(s, "  Nombre: Randolph Muy.\n");
     seq_printf(s, "  Carnet: 201314112.\n");
+    unsigned int process_count = 0;
+    seq_printf(s, "---Inicio-----\n");
+    for_each_process(task_list) {
+         seq_printf(s, "PID: %d\tPROCESS: %s\tSTATE: %ld\n",task_list->pid, task_list->comm, task_list->state);
+         process_count++;    
+         list_for_each(list, &task_list->children){                        
+           	task_child = list_entry( list, struct task_struct, sibling );   
+         	seq_printf(s, "hijo:\tPID: %d\tPROCESS: %s\tSTATE: %ld\n",task_child->pid,task_child->comm, task_child->state);
+        }
+        seq_printf(s,"-----------------------------------------------------");    /*for aesthetics*/
+    }
+    pr_info("Number of processes:%u\n", process_count);
     return 0;
 }
 static int open_file(struct inode *inode, struct  file *file) {
@@ -58,20 +70,20 @@ static struct file_operations fcpu =
 }; 
 static int testmodulo_init(void)
 {
-    proc_create("memo_201213282_201314112", 0, NULL, &fcpu);
-    unsigned int process_count = 0;
-    printk(KERN_INFO "---Inicio-----\n");
-    for_each_process(task_list) {
-         printk(KERN_INFO "PID: %d\tPROCESS: %s\tSTATE: %ld\n",task_list->pid, task_list->comm, task_list->state);
-         process_count++;    
-         list_for_each(list, &task_list->children){                        
-           	task_child = list_entry( list, struct task_struct, sibling );   
-         	printk(KERN_INFO "hijo:\tPID: %d\tPROCESS: %s\tSTATE: %ld\n",task_child->pid,task_child->comm, task_child->state);
-        }
-        printk("-----------------------------------------------------");    /*for aesthetics*/
-    }
-    pr_info("Number of processes:%u\n", process_count);
-    printk(KERN_INFO "Sergio De los Rios\nRandolph Muy\n");//numero de carnet
+    proc_create("cpu_201213282_201314112", 0, NULL, &fcpu);
+    // unsigned int process_count = 0;
+    // printk(KERN_INFO "---Inicio-----\n");
+    // for_each_process(task_list) {
+    //      printk(KERN_INFO "PID: %d\tPROCESS: %s\tSTATE: %ld\n",task_list->pid, task_list->comm, task_list->state);
+    //      process_count++;    
+    //      list_for_each(list, &task_list->children){                        
+    //        	task_child = list_entry( list, struct task_struct, sibling );   
+    //      	printk(KERN_INFO "hijo:\tPID: %d\tPROCESS: %s\tSTATE: %ld\n",task_child->pid,task_child->comm, task_child->state);
+    //     }
+    //     printk("-----------------------------------------------------");    /*for aesthetics*/
+    // }
+    // pr_info("Number of processes:%u\n", process_count);
+    printk(KERN_INFO "Sergio De los Rios-201213282\nRandolph Muy-201314112\n");//numero de carnet
  //Aqui iria el codigo a ejecutar
    return 0;    // Si el retorno no es 0 
                 //quiere decir que el modulo no se ha podido cargar
