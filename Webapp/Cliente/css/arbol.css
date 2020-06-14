@@ -1,4 +1,4 @@
- .contenedor-arbol, .contenedor-arbol ul, .contenedor-arbol li {
+.contenedor-arbol, .contenedor-arbol ul, .contenedor-arbol li {
           position: relative;
 	  font-size: 18px;
           color: green;
@@ -31,3 +31,5 @@
       .contenedor-arbol ul > li:last-child::after {
           height: 8px;
       }
+
+
