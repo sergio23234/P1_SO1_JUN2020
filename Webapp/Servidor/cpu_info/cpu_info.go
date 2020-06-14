@@ -36,7 +36,7 @@ func getCPUSample() (idle, total uint64) {
 
 func GetPorcentajeUso() float64 {
 	idle0, total0 := getCPUSample()
-	time.Sleep(3 * time.Second)
+	time.Sleep(2 * time.Second)
 	idle1, total1 := getCPUSample()
 
 	idleTicks := float64(idle1 - idle0)

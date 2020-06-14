@@ -1,13 +1,91 @@
 <!DOCTYPE html>
 <html>
+<style>
+  body {
+    background-image: url("../Raminfo/fondito1.jpg");
+  }
+
+  .boton_personalizado {
+    text-decoration: none;
+    padding: 10px;
+    font-weight: 600;
+    font-size: 20px;
+    color: #ffffff;
+    background-color: #1883ba;
+    border-radius: 6px;
+    border: 2px solid #0016b0;
+  }
+
+  h1 {
+    color: #e3f029;
+  }
+
+  h3 {
+    color: #a2cf08;
+  }
+
+  .myDiv {
+    background-image: url("../Raminfo/25101.jpg");
+  }
+</style>
 
 <head>
   <meta charset="utf-8">
-  <title>Mi pagina de prueba</title>
+  <title>info CPU</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
 </head>
 
 <body>
   <h1>Informacion del CPU</h1>
-  <input type="submit" value="regresar" onclick = "location='../index.html'"/>
-  </body>
+  <h3 id="utilizado">U</h3>
+  <!-- morris js -->
+  <div id="myfirstchart" style="height: 250px;"></div>
+  <input class="boton_personalizado" type="submit" value="regresar" onclick="location='../index.html'" />
+
+  <script type="text/javascript" src="cpu_info.js"></script>
+  <script>
+    var data_chart_cpu = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
+    var datos_cpu = new Morris.Line({
+      // ID of the element in which to draw the chart.
+      element: 'myfirstchart',
+      // Chart data records -- each entry in this array corresponds to a point on
+      // the chart.
+      data: [
+        { datox: '02', value: 0 },
+        { datox: '04', value: 0 },
+        { datox: '06', value: 0 },
+        { datox: '08', value: 0 },
+        { datox: '10', value: 0 },
+        { datox: '12', value: 0 },
+        { datox: '14', value: 0 },
+        { datox: '16', value: 0 },
+        { datox: '18', value: 0 },
+        { datox: '20', value: 0 }
+
+      ],
+      // The name of the data record attribute that contains x-values.
+      xkey: 'datox',
+      // A list of names of data record attributes that contain y-values.
+      ykeys: ['value'],
+      // Labels for the ykeys -- will be displayed when you hover over the
+      // chart.
+      labels: ['Value'],
+      fillOpacity: 1,
+      hideHover: 'auto',
+      parseTime: false,
+      behaveLikeLine: true,
+      resize: true,
+      pointFillColors: ['#ffffff'],
+      pointStrokeColors: ['black'],
+      lineColors: ['red', 'blue']
+    });
+  </script>
+  <script>
+    setInterval('llamada_cpu()', 2000);
+  </script>
+</body>
+
 </html>
