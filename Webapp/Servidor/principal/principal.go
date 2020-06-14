@@ -1,6 +1,7 @@
-package main
+package principal
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -11,28 +12,26 @@ import (
 )
 
 type betaInfo struct { //para la tabla de procesos se mostraria todo menos padre
-	nombre string
-	pid    string
-	ram    string
-	user   string
-	estado string
-	padre  string
+	Nombre string `json:"Nombre"`
+	Pid    string `json:"Pid"`
+	Rram   string `json:"Rram"`
+	User   string `json:"User"`
+	Estado string `json:"Estado"`
+	Padre  string `json:"Padre"`
 }
 type alphaInfo struct { //para la tabla de procesos con sus hijos
-	nombre string
-	pid    string
-	/*ram    string
-	user   string
-	estado string*/
-	hijos []alphaInfo
+	Nombre string      `json:"Nombre"`
+	Pid    string      `json:"Pid"`
+	Hijos  []alphaInfo `json:"Hijos"`
 }
 type sendinfo struct { //informacion a enviar
-	tabla    []betaInfo
-	ordenado []alphaInfo
-	zomibes  int
-	running  int
-	stoped   int
-	total    int
+	Tabla    []betaInfo  `json:"Tabla"`
+	Ordenado []alphaInfo `json:"Ordenado"`
+	Zomibes  int         `json:"Zombies"`
+	Running  int         `json:"Running"`
+	Stoped   int         `json:"Stoped"`
+        Sleeped  int 	     `json:"Sleeped"`
+	Total    int         `json:"Total"`
 }
 
 var zomibes int = 0
@@ -41,7 +40,8 @@ var sleeping int = 0
 var stoped int = 0
 var total int = 0
 
-func main() {
+//Principal funcion principal
+func Principal() []byte {
 	zomibes = 0
 	running = 0
 	sleeping = 0
@@ -69,32 +69,44 @@ func main() {
 		vectorbeta = append(vectorbeta, nueva)
 	}
 	var padres []alphaInfo = ordenar(vectorbeta)
-	for i = 0; i < len(padres); i++ {
+	/*for i = 0; i < len(padres); i++ {
 		var act alphaInfo = padres[i]
 		imprimirfu(act, "")
-	}
+	}*/
 	var toret sendinfo
-	toret.ordenado = padres
-	toret.tabla = vectorbeta
-	toret.zomibes = zomibes
-	toret.running = running
-	toret.stoped = stoped
-	toret.total = total
-	fmt.Println("total:" + strconv.Itoa(total) + " zombies:" + strconv.Itoa(zomibes) + " corriendo:" + strconv.Itoa(running) + " dormidos:" + strconv.Itoa(sleeping) + " detenidos:" + strconv.Itoa(stoped))
+	toret.Ordenado = padres
+	toret.Tabla = vectorbeta
+	toret.Zomibes = zomibes
+	toret.Running = running
+	toret.Stoped = stoped
+	toret.Total = total
+	res2D := &sendinfo{
+		Ordenado: padres,
+		Tabla:    vectorbeta,
+		Zomibes:  zomibes,
+		Running:  running,
+		Stoped:   stoped,
+                Sleeped:   sleeping,
+		Total:    total}
+	res2B, err := json.Marshal(res2D)
+	if err != nil {
+		fmt.Println("Error al convertir")
+	}
+	return res2B
 }
 func ordenar(desorden []betaInfo) []alphaInfo {
 	var i int
 	var padres []alphaInfo
 	for i = 0; i < len(desorden); i++ {
 		var act betaInfo = desorden[i]
-		if act.padre == "0" {
+		if act.Padre == "0" {
 			var nueva alphaInfo
-			nueva.nombre = act.nombre
-			nueva.pid = act.pid
+			nueva.Nombre = act.Nombre
+			nueva.Pid = act.Pid
 			/*nueva.estado = act.estado
 			nueva.ram = act.ram
 			nueva.user = act.user*/
-			nueva.hijos = retornarHijos(desorden, act.pid)
+			nueva.Hijos = retornarHijos(desorden, act.Pid)
 			padres = append(padres, nueva)
 		}
 	}
@@ -105,26 +117,23 @@ func retornarHijos(desorden []betaInfo, id string) []alphaInfo {
 	var i int
 	for i = 0; i < len(desorden); i++ {
 		var act betaInfo = desorden[i]
-		if act.padre == id {
+		if act.Padre == id {
 			var nueva alphaInfo
-			nueva.nombre = act.nombre
-			nueva.pid = act.pid
-			/*nueva.estado = act.estado
-			nueva.ram = act.ram
-			nueva.user = act.user*/
-			nueva.hijos = retornarHijos(desorden, act.pid)
+			nueva.Nombre = act.Nombre
+			nueva.Pid = act.Pid
+			nueva.Hijos = retornarHijos(desorden, act.Pid)
 			hijos = append(hijos, nueva)
 		}
 	}
 	return hijos
 }
 func imprimirfu(act alphaInfo, temp string) {
-	fmt.Println(temp + "nombre: " + act.nombre + "\t pid: " + act.pid)
-	if len(act.hijos) > 0 {
+	fmt.Println(temp + "nombre: " + act.Nombre + "\t pid: " + act.Pid)
+	if len(act.Hijos) > 0 {
 		var i int
 		fmt.Println("")
-		for i = 0; i < len(act.hijos); i++ {
-			var act alphaInfo = act.hijos[i]
+		for i = 0; i < len(act.Hijos); i++ {
+			var act alphaInfo = act.Hijos[i]
 			imprimirfu(act, temp+"\t")
 		}
 	}
@@ -134,11 +143,11 @@ func leernumero(numero string, Rammem int) betaInfo {
 	if err != nil {
 		fmt.Println("Error al abrir el archivo")
 		var toret betaInfo
-		toret.nombre = ""
-		toret.estado = ""
-		toret.pid = ""
-		toret.ram = ""
-		toret.padre = ""
+		toret.Nombre = ""
+		toret.Estado = ""
+		toret.Pid = ""
+		toret.Rram = ""
+		toret.Padre = ""
 		return toret
 	} else {
 		cadena := string(filedata)
@@ -150,12 +159,12 @@ func leernumero(numero string, Rammem int) betaInfo {
 		var por string = retMemo(vect[17], Rammem)
 		var userx string = retuser(vect[8])
 		var toret betaInfo
-		toret.nombre = nombre
-		toret.estado = estado
-		toret.pid = pid
-		toret.ram = por
-		toret.padre = padre
-		toret.user = userx
+		toret.Nombre = nombre
+		toret.Estado = estado
+		toret.Pid = pid
+		toret.Rram = por
+		toret.Padre = padre
+		toret.User = userx
 		//fmt.Println("padre:" + padre + "---->" + nombre + " --->" + estado + " --->" + pid + " ---> " + por)
 		return toret
 	}

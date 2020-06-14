@@ -18,7 +18,6 @@ type Ramtipo struct { //estructura a enviar en la ram
 //ObtenerRAM es para obtener la ram
 func ObtenerRAM() []byte {
 	filedata, err := ioutil.ReadFile("/proc/meminfo")
-	fmt.Println("entro a ram")
 	if err != nil {
 		fmt.Println("Error al abrir el archivo")
 		res2D := &Ramtipo{

@@ -1,23 +1,111 @@
 <!DOCTYPE html>
 <html>
-
 <head>
   <meta charset="utf-8">
-  <title>Mi pagina de prueba</title>
+  <title>Principal</title>
+<link rel="stylesheet" type="text/css" href="css/index.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="css/arbol.css" media="screen" />
+ <style>
+    body {
+      background-image: url("Raminfo/fondito1.jpg");
+    }
+    .boton_personalizado{
+    text-decoration: none;
+    padding: 10px;
+    font-weight: 600;
+    font-size: 20px;
+    color: #ffffff;
+    background-color: #1883ba;
+    border-radius: 6px;
+    border: 2px solid #0016b0;
+  }
+  h1 {
+  color:  #e3f029;
+  }
+  h3 {
+  color:  #a2cf08;
+  }
+  .contenedor-arbol{
+   background-image: url("Raminfo/25101.jpg");
+   background-size:100% 100%; 
+	}
+   .resu{
+   background-image: url("Raminfo/negro.jpg");
+   background-size:100% 100%; 
+	}
+   </style>
 </head>
-
 <body>
   <script type="text/javascript" src="js/prueba.js"></script>
   <h3>Pagina Principal</h3>
-<input type="submit" value="informacion Cpu" onclick = "location='Cpuinfo/cpuinfo.html'"/>  
-<input type="submit" value="informacion Ram" onclick = "location='Raminfo/raminfo.html'"/>
-<button id="btnAsync" onclick="myFunction()">prueba</button>
+<input class="boton_personalizado" type="submit" value="informacion Cpu" onclick = "location='Cpuinfo/cpuinfo.html'"/>  
+<input class="boton_personalizado" type="submit" value="informacion Ram" onclick = "location='Raminfo/raminfo.html'"/>
+<br>
+<br>
+ <nav id="Menu">
+  <ul>
+	<li><a onclick="Probar(1)">Resumen</a></li>
+	<li><a onclick="Probar(2)">Procesos</a></li>
+	<li><a onclick="Probar(3)">Arbol</a></li>
+  </ul>
+ </nav>
+<br>
+<br>
+<div id="Resumen" style="visibility: hidden" class="resu">
+<h3 id="total">Total:</h3>
+<h3 id="zombies">Zombies:</h3>
+<h3 id="corriendo">Corriendo:</h3>
+<h3 id="detenido">Detenido:</h3>
+<h3 id="durmiendo">Durmiendo:</h3>
+</div>
+<div id="Tabla" style="visibility: hidden">
+<h3>tabla:</h3>
+<table class="idtable" id="Stable">
+   <thead>
+   <tr>
+    <th>Nombre</th>
+    <th>Pid</th>
+    <th>Estado</th>
+    <th>Usuario</th>
+    <th>Uso Ram</th>
+  </tr>
+ </thead>
+ <tbody>
+ </tbody>  
+</table>
+</div>
+<div id="Arbol" style="visibility: hidden" class="contenedor-arbol">
+<h3>Arbol:</h3>
+<ul id="Uroot">
+</ul>
+</div>
   <script>
-    function myFunction() {
+    var actual = null;
+    function Probar(id) {
+     var act = null;
+     if(id==1){
+	act = document.getElementById("Resumen");
+     }else if(id==2){
+	act = document.getElementById("Tabla");
+     }else{
+	act = document.getElementById("Arbol");
+     }
+	if(actual!=null){
+	actual.style = "display:none;";
+	actual = act;
+	actual.style = "display:show;";
+	}else{
+	 actual = act;
+	actual.style = "display:show;";	
+	}
+    }
+  function myFunction() {
       console.log("llego");
       prueba();
     }
   </script>
+<script>
+   setInterval('prueba()',3000);
+  </script>
 </body>
-
 </html>
