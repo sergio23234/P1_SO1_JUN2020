@@ -70,7 +70,7 @@
 <h3>tabla:</h3>
 <label for="idkill" class="label">A eliminar:</label>
 <input type="number" id="idkill" name="id">
-<button id="btnAsync" class="boton_personalizado" onclick="myFunction()">prueba</button>
+<button id="btnAsync" class="boton_personalizado" onclick="myFunction()">Eliminar Proceso</button>
 <table class="idtable" id="Stable">
    <thead>
    <tr>
@@ -92,6 +92,7 @@
 </div>
   <script>
     var actual = null;
+    var actuales = [];
     function Probar(id) {
      var act = null;
      if(id==1){
