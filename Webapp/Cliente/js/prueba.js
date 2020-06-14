@@ -8,7 +8,39 @@ function prueba(){
     console.log("error!!");
   })
 }
-
+function prueba_id(id_number){  
+var entro = 0;
+for(var i in actuales){
+ if(actuales[i]==id_number)
+	{
+	  entro = 1;
+	  break;
+	}
+}
+if(entro==1){
+fetch("http://localhost:8080/idkill",{
+	method:'post',
+	headers:{
+		"Content-Type":"application/json"
+	},
+	body: JSON.stringify({Id:id_number})})
+  .then(res => res.json())
+  .then(data => {
+	document.getElementById("idkill").value ="";
+	if(data.respuesta=="1")
+	{	
+		alert("proceso "+id_number+" terminado");
+ 	}else{alert("proceso "+id_number+" no terminado");}   
+  location.reload();
+  })
+  .catch(function(error){
+    console.log("error!!");
+  })
+}
+else{
+alert("no existe ese Pid");
+}
+}
 function Actualizar_Datos(data){
 document.getElementById("total").innerHTML="Total:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+data.Total;
 document.getElementById("zombies").innerHTML="Zombies:&nbsp;&nbsp;&nbsp;&nbsp;"+data.Zombies;
@@ -44,7 +76,8 @@ function Hijos_arbol(data,rot)
 }
 
 function Graficar_Tabla(data){
-  var tablaE = document.getElementById("Stable");
+actuales = [];  
+var tablaE = document.getElementById("Stable");
   tablaE.parentNode.removeChild(tablaE);
   var tabla = document.createElement("table");
   tabla.id = "Stable";
@@ -75,6 +108,7 @@ var th2 = document.createElement('th');
         hilera.appendChild(hilera_1);
         var hilera_2 = document.createElement("td");
         var subtext_t2 = document.createTextNode(Simbolo.Pid);
+	actuales.push(Simbolo.Pid);
         hilera_2.appendChild(subtext_t2);
         hilera.appendChild(hilera_2);
         var hilera_3 = document.createElement("td");

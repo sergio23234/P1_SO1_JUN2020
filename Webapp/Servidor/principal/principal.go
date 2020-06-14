@@ -249,9 +249,12 @@ func memoriaram() int {
 	}
 	return 0
 }
-func terminarproceso(id string) {
+//TerminarProceso eliminar el proceso actual
+func TerminarProceso(id string) int {
 	cmd := exec.Command("kill", "-9", id)
 	if err := cmd.Run(); err != nil {
 		log.Fatal(err)
+		return 0;
 	}
+	return 1;
 }
